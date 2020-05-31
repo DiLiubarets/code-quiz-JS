@@ -1,0 +1,26 @@
+.main{
+	justify-content: center;
+	text-align: center;
+	padding: 3em;
+	height: 20em;
+	margin-top: 10em;
+}
+#timer{
+	float: right;
+}
+h6{
+	margin-right: -20em;
+}
+#finalResult{
+	text-align: center;
+	font-size: larger;
+}
+body{
+	background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
+	background-repeat: no-repeat;
+	height: 100vh;
+}
+.btn{
+	margin-top: 3em;
+	font-size: 25px;
+}
