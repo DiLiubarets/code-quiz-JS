@@ -158,7 +158,7 @@ function eval(choice) {
 }
 
 function reset() {
-  finalResult.innerHTML = score;
+  finalResult.innerHTML = 'You answered ' + score+ ' questions';
   clearInterval(timer);
   result.style.display = "none";
   finalResult.style.display = "block";
