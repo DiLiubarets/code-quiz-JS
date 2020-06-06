@@ -10,6 +10,10 @@ I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
 SO THAT I can gauge my progress compared to my peers
 ```
 
+Assignment for Carleton University codding boot camp
+Live DEMO: https://diliubarets.github.io/code-quiz-JS/
+
+
 ## Acceptance Criteria
 
 ```
@@ -25,5 +29,4 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and score
 ```
-
 

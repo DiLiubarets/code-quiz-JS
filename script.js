@@ -73,7 +73,8 @@ var myQuestions = [
     question:
       "Which of the following is true about variable naming conventions in JavaScript?",
     answers: {
-      a: "You should not use any of the JavaScript reserved keyword as variable name.",
+      a:
+        "You should not use any of the JavaScript reserved keyword as variable name.",
       b: "JavaScript variable names should not start with a numeral (0-9).",
       c: " Both of the above.",
     },
@@ -88,25 +89,35 @@ var nextButton = document.getElementById("next");
 var result = document.getElementById("result");
 var finalResult = document.getElementById("finalResult");
 var textP = document.getElementById("text");
+var saveButton = document.getElementById("save")
 var isQuizStart;
 var score = 0;
 var questionNumber = 0;
 var timer;
 var answered;
+var highScores;
+
 
 init();
 
 function init() {
   quizDiv.style.display = "none";
   timerDiv.style.display = "none";
+
   isQuizStart = false;
   questionNumber = 0;
-  score = 0;
+
+  if (localStorage.getItem("highScores")) {
+    highScores = JSON.parse(localStorage.getItem("highScores"))
+  } else {
+    highScores = []
+  }
 }
 
 function startTimer() {
   startQuiz();
   var startTime = 100000;
+  timerDiv.innerHTML = startTime / 1000;
   timer = setInterval(function () {
     startTime = startTime - 1000;
     timerDiv.innerHTML = startTime / 1000;
@@ -118,9 +129,11 @@ function startTimer() {
 }
 
 function startQuiz() {
+  score = 0;
   textP.style.display = "none";
   isQuizStart = true;
   startButton.style.display = "none";
+  saveButton.style.display = "none";
   quizDiv.style.display = "block";
   timerDiv.style.display = "block";
   finalResult.style.display = "none";
@@ -148,7 +161,8 @@ function eval(choice) {
       result.innerHTML = "Wrong";
     }
 
-    if (questionNumber == myQuestions.length - 1) {
+    //if (questionNumber == myQuestions.length - 1) {
+    if (questionNumber == 1) {
       reset();
     } else {
       questionNumber++;
@@ -158,10 +172,37 @@ function eval(choice) {
 }
 
 function reset() {
-  finalResult.innerHTML = 'You answered ' + score+ ' questions';
+  finalResult.innerHTML = "You answered  " + score + " questions correctly";
   clearInterval(timer);
   result.style.display = "none";
   finalResult.style.display = "block";
   startButton.style.display = "block";
+  saveButton.style.display = "block"
   init();
+}
+
+function saveScore() {
+  var arranged = arrangeScores(score, highScores)
+  console.log(arranged)
+  localStorage.setItem("highScores", JSON.stringify(arranged))
+}
+
+function arrangeScores(num, array) {
+  if (array.length == 0) {
+    array.push(num)
+  } else if(num < array[0]) {
+      array.unshift(num)
+  } else if (num > array[array.length-1]) {
+      array.push(num)
+  }
+   else {
+    for (i=0; i < array.length-1; i++) {
+      if (num > array[i] && num <= array[i+1]) {
+        array.splice(i+1, 0, num)
+        console.log("works")
+        break
+      }
+    }
+  }
+  return array
 }

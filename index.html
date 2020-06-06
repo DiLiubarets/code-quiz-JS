@@ -33,10 +33,10 @@
       <h6 class="h4">Timer:</h6>
       <div class="h1" id="timer"></div>
     </nav>
-    <div class="h1"id="finalResult"></div>
+    <div class="h1" id="finalResult"></div>
 
     <div class="main">
-      <p class="h3"id="text">
+      <p class="h3" id="text">
         Following quiz provides Multiple Choice Questions (MCQs) related to
         Javascript Framework. You will have to read all the given answers and
         click over the correct answer.
@@ -49,7 +49,11 @@
       >
         Start quiz
       </button>
-      <div class="h1"id="quiz">
+
+      <button type="button"
+      class="btn btn-secondary" id="save" onclick="saveScore()">Save</button>
+
+      <div class="h1" id="quiz">
         <p></p>
         <button
           type="button"
@@ -76,7 +80,8 @@
         </button>
       </div>
 
-      <div class="h3" id="result"></div>
+      <div class="h3" id="result">
+      </div>
     </div>
 
     <script src="script.js"></script>
