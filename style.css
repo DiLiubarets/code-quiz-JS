@@ -8,9 +8,7 @@
 #timer {
   float: right;
 }
-h6 {
-  margin-right: -20em;
-}
+
 #finalResult {
   text-align: center;
   font-size: larger;
@@ -18,7 +16,8 @@ h6 {
 body {
   background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 200vh;
+
 }
 .btn {
   margin-top: 3em;
@@ -26,4 +25,14 @@ body {
 }
 #finalResult {
   padding-top: 5em;
+}
+#highScores{
+  margin-top: 20%;
+  float: left;
+}
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 0em;
 }
