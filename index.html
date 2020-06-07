@@ -1,89 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Code Quiz Javascript</title>
-  </head>
-  <body>
-    <nav class="navbar sticky-top navbar-light bg-light">
-      <h4 class="display-4">Code Quiz JS</h4>
-      <h6 class="h4">Timer:</h6>
-      <div class="h1" id="timer"></div>
-    </nav>
-    <div class="h1" id="finalResult"></div>
 
-    <div class="main">
-      <p class="h3" id="text">
-        Following quiz provides Multiple Choice Questions (MCQs) related to
-        Javascript Framework. You will have to read all the given answers and
-        click over the correct answer.
-      </p>
-      <button
-        type="button"
-        class="btn btn-secondary btn-lg"
-        id="start"
-        onclick="startTimer()"
-      >
-        Start quiz
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Code Quiz Javascript</title>
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-light bg-light">
+    <h4 class="display-4">Code Quiz JS</h4>
+    <h6 class="h4">Timer:</h6>
+    <div class="h1" id="timer"></div>
+  </nav>
+  <div class="h1" id="finalResult"></div>
+
+  <div class="main">
+    <p class="h3" id="text">
+      Following quiz provides Multiple Choice Questions (MCQs) related to
+      Javascript Framework. You will have to read all the given answers and
+      click over the correct answer.Keep in mind that incorrect answers will penalize your score/time by ten seconds.
+    </p>
+    <button type="button" class="btn btn-secondary btn-lg" id="start" onclick="startQuiz()">
+      Start quiz
+    </button>
+
+    <div id=highScores></div>
+    <div class="h1" id="quiz">
+      <p></p>
+      <button type="button" class="btn btn-outline-dark btn-lg" onclick="eval('a')"></button>
+      <button type="button" class="btn btn-outline-dark btn-lg" onclick="eval('b')"></button>
+      <button type="button" class="btn btn-outline-dark btn-lg" onclick="eval('c')"></button>
+      <button type="button" class="btn btn-secondary btn-lg" id="next" onclick="initQuestion()">
+        Next question
       </button>
-
-      <button type="button"
-      class="btn btn-secondary" id="save" onclick="saveScore()">Save</button>
-
-      <div class="h1" id="quiz">
-        <p></p>
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          onclick="eval('a')"
-        ></button>
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          onclick="eval('b')"
-        ></button>
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          onclick="eval('c')"
-        ></button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          id="next"
-          onclick="initQuestion()"
-        >
-          Next question
-        </button>
-      </div>
-
-      <div class="h3" id="result">
-      </div>
+    </div>
+    <div id="save">
+      <input class="center-block form-control form-control-lg" placeholder="Your initials" id="initialsInput"></input>
+      <button type="button" class="btn btn-secondary btn-lg" onclick="saveScore()">Save</button>
+      <button type="button" class="btn btn-secondary btn-lg" onclick="clearsHighscores()">Clears Highscores</button>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <div class="h3" id="result">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>

@@ -51,7 +51,7 @@ var myQuestions = [
   },
   {
     question:
-      "Which of the following function of Number object defines how many total digits to display of a number?",
+      "Which of the following function of scoreObjber object defines how many total digits to display of a scoreObjber?",
     answers: {
       a: "toPrecision()",
       b: "toFixed()",
@@ -75,13 +75,13 @@ var myQuestions = [
     answers: {
       a:
         "You should not use any of the JavaScript reserved keyword as variable name.",
-      b: "JavaScript variable names should not start with a numeral (0-9).",
+      b: "JavaScript variable names should not start with a scoreObjeral (0-9).",
       c: " Both of the above.",
     },
     correctAnswer: "c",
   },
 ];
-
+// initial required variables
 var startButton = document.getElementById("start");
 var timerDiv = document.getElementById("timer");
 var quizDiv = document.getElementById("quiz");
@@ -89,10 +89,15 @@ var nextButton = document.getElementById("next");
 var result = document.getElementById("result");
 var finalResult = document.getElementById("finalResult");
 var textP = document.getElementById("text");
-var saveButton = document.getElementById("save")
-var isQuizStart;
+var saveDiv = document.getElementById("save")
+var initialsInput = document.getElementById("initialsInput")
+var highScoresDiv = document.getElementById("highScores")
+
+var isComplete = false;
+var isQuizStart = false;
 var score = 0;
-var questionNumber = 0;
+var questionscoreObjber = 0;
+var startTime = 100000;
 var timer;
 var answered;
 var highScores;
@@ -103,20 +108,43 @@ init();
 function init() {
   quizDiv.style.display = "none";
   timerDiv.style.display = "none";
+  
+  //saveDiv display validation
+  if (!isComplete) {
+    saveDiv.style.display = "none";
+  } else {
+    saveDiv.style.display = "block";
+  }
 
-  isQuizStart = false;
-  questionNumber = 0;
-
+  //get highscores
   if (localStorage.getItem("highScores")) {
     highScores = JSON.parse(localStorage.getItem("highScores"))
   } else {
     highScores = []
   }
+
+  renderScores()
+
+}
+
+function startQuiz() {
+  startTimer();
+  score = 0;
+  isQuizStart = true;
+  isComplete = false;
+
+  textP.style.display = "none";
+  startButton.style.display = "none";
+  highScoresDiv.style.display = "none";
+  saveDiv.style.display = "none";
+  quizDiv.style.display = "block";
+  timerDiv.style.display = "block";
+  finalResult.style.display = "none";
+  initQuestion();
 }
 
 function startTimer() {
-  startQuiz();
-  var startTime = 100000;
+
   timerDiv.innerHTML = startTime / 1000;
   timer = setInterval(function () {
     startTime = startTime - 1000;
@@ -128,81 +156,106 @@ function startTimer() {
   }, 1000);
 }
 
-function startQuiz() {
-  score = 0;
-  textP.style.display = "none";
-  isQuizStart = true;
-  startButton.style.display = "none";
-  saveButton.style.display = "none";
-  quizDiv.style.display = "block";
-  timerDiv.style.display = "block";
-  finalResult.style.display = "none";
-  initQuestion();
-}
-
+// function to set the questions data 
 function initQuestion() {
-  answered = false;
-  result.innerHTML = "";
   result.style.display = "block";
+  result.innerHTML = "";
+  answered = false;
   var children = quizDiv.children;
-  children[0].innerHTML = myQuestions[questionNumber].question;
-  children[1].innerHTML = myQuestions[questionNumber].answers.a;
-  children[2].innerHTML = myQuestions[questionNumber].answers.b;
-  children[3].innerHTML = myQuestions[questionNumber].answers.c;
+  children[0].innerHTML = myQuestions[questionscoreObjber].question;
+  children[1].innerHTML = myQuestions[questionscoreObjber].answers.a;
+  children[2].innerHTML = myQuestions[questionscoreObjber].answers.b;
+  children[3].innerHTML = myQuestions[questionscoreObjber].answers.c;
 }
 
 function eval(choice) {
   if (!answered) {
-    var correctAnswer = myQuestions[questionNumber].correctAnswer;
+    var correctAnswer = myQuestions[questionscoreObjber].correctAnswer;
     if (choice == correctAnswer) {
       result.innerHTML = "Correct";
       score++;
     } else {
       result.innerHTML = "Wrong";
+      startTime = startTime - 10000;
+      
     }
 
-    //if (questionNumber == myQuestions.length - 1) {
-    if (questionNumber == 1) {
+    if (questionscoreObjber == myQuestions.length -1) {
       reset();
     } else {
-      questionNumber++;
+      questionscoreObjber++;
       answered = true;
     }
   }
 }
 
 function reset() {
-  finalResult.innerHTML = "You answered  " + score + " questions correctly";
+  isComplete = true;
+  isQuizStart = false;
+  questionscoreObjber = 0;
   clearInterval(timer);
+
   result.style.display = "none";
   finalResult.style.display = "block";
   startButton.style.display = "block";
-  saveButton.style.display = "block"
+  highScoresDiv.style.display = "block"
+  saveDiv.style.display = "block"
+  finalResult.innerHTML = "You answered  " + score + " questions correctly";
   init();
 }
 
 function saveScore() {
-  var arranged = arrangeScores(score, highScores)
+  var initials = initialsInput.value
+
+  if (!initials || initials == "") {
+    alert("Please enter initials")
+    return
+  }
+
+  var scoreObject = {
+    initial: initials,
+    score: score
+  }
+
+  var arranged = arrangeScores(scoreObject, highScores)
   console.log(arranged)
   localStorage.setItem("highScores", JSON.stringify(arranged))
+  renderScores()
 }
 
-function arrangeScores(num, array) {
+function renderScores() {
+  highScoresDiv.innerHTML = ""
+  var ul = document.createElement("ul")
+
+  for (var entry of highScores) {
+    var li = document.createElement("li")
+    li.innerHTML = "Initials: " + entry.initial + " Score: " + entry.score
+    ul.appendChild(li)
+  }
+  highScoresDiv.append(ul)
+}
+
+function arrangeScores(scoreObj, array) {
   if (array.length == 0) {
-    array.push(num)
-  } else if(num < array[0]) {
-      array.unshift(num)
-  } else if (num > array[array.length-1]) {
-      array.push(num)
+    array.push(scoreObj)
+  } else if(scoreObj.score <= array[0].score) {
+      array.unshift(scoreObj)
+  } else if (scoreObj.score >= array[array.length-1].score) {
+      array.push(scoreObj)
   }
    else {
     for (i=0; i < array.length-1; i++) {
-      if (num > array[i] && num <= array[i+1]) {
-        array.splice(i+1, 0, num)
-        console.log("works")
+      if (scoreObj.score > array[i].score && scoreObj.score <= array[i+1].score) {
+        array.splice(i+1, 0, scoreObj)
         break
       }
     }
   }
   return array
+}
+function clearsHighscores(){
+  localStorage.clear();
+  renderScores() 
+  highScoresDiv.innerHTML = ""
+
 }
