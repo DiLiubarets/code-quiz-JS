@@ -81,7 +81,7 @@ var myQuestions = [
     correctAnswer: "c",
   },
 ];
-
+// initial required variables
 var startButton = document.getElementById("start");
 var timerDiv = document.getElementById("timer");
 var quizDiv = document.getElementById("quiz");
@@ -97,6 +97,7 @@ var isComplete = false;
 var isQuizStart = false;
 var score = 0;
 var questionscoreObjber = 0;
+var startTime = 100000;
 var timer;
 var answered;
 var highScores;
@@ -143,7 +144,7 @@ function startQuiz() {
 }
 
 function startTimer() {
-  var startTime = 100000;
+
   timerDiv.innerHTML = startTime / 1000;
   timer = setInterval(function () {
     startTime = startTime - 1000;
@@ -155,7 +156,7 @@ function startTimer() {
   }, 1000);
 }
 
-
+// function to set the questions data 
 function initQuestion() {
   result.style.display = "block";
   result.innerHTML = "";
@@ -175,6 +176,8 @@ function eval(choice) {
       score++;
     } else {
       result.innerHTML = "Wrong";
+      startTime = startTime - 10000;
+      
     }
 
     if (questionscoreObjber == myQuestions.length -1) {
@@ -249,4 +252,10 @@ function arrangeScores(scoreObj, array) {
     }
   }
   return array
+}
+function clearsHighscores(){
+  localStorage.clear();
+  renderScores() 
+  highScoresDiv.innerHTML = ""
+
 }
