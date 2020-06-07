@@ -2,9 +2,6 @@
   justify-content: center;
   text-align: center;
   padding: 3em;
-  margin-top: 0em;
- 
- 
 }
 #timer {
   float: right;
@@ -12,32 +9,28 @@
 
 #finalResult {
   text-align: center;
-
 }
 body {
   background-image: linear-gradient(to top, #c1dfc4 0%, #deecdd 100%);
   background-repeat: no-repeat;
   height: 200vh;
-
 }
 .btn {
   margin-top: 3em;
-  
 }
 #finalResult {
   padding-top: 5em;
 }
-#highScores ul{
-  list-style:none;
- text-decoration: none;
- margin: 3em
+#highScores ul {
+  list-style: none;
+  text-decoration: none;
+  margin: 3em;
 }
 .center-block {
   display: block;
   margin-right: auto;
   margin-left: auto;
-
 }
-#initialsInput{
+#initialsInput {
   width: 350px;
 }
