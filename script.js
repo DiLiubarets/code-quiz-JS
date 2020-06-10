@@ -96,8 +96,8 @@ var highScoresDiv = document.getElementById("highScores")
 var isComplete = false;
 var isQuizStart = false;
 var score = 0;
-var questionscoreObjber = 0;
-var startTime = 100000;
+var index = 0;
+var startTime;
 var timer;
 var answered;
 var highScores;
@@ -144,13 +144,13 @@ function startQuiz() {
 }
 
 function startTimer() {
-
+  startTime = 100000;
   timerDiv.innerHTML = startTime / 1000;
   timer = setInterval(function () {
     startTime = startTime - 1000;
     timerDiv.innerHTML = startTime / 1000;
 
-    if (startTime == 0) {
+    if (!(startTime > 0)) {
       reset();
     }
   }, 1000);
@@ -162,15 +162,15 @@ function initQuestion() {
   result.innerHTML = "";
   answered = false;
   var children = quizDiv.children;
-  children[0].innerHTML = myQuestions[questionscoreObjber].question;
-  children[1].innerHTML = myQuestions[questionscoreObjber].answers.a;
-  children[2].innerHTML = myQuestions[questionscoreObjber].answers.b;
-  children[3].innerHTML = myQuestions[questionscoreObjber].answers.c;
+  children[0].innerHTML = myQuestions[index].question;
+  children[1].innerHTML = myQuestions[index].answers.a;
+  children[2].innerHTML = myQuestions[index].answers.b;
+  children[3].innerHTML = myQuestions[index].answers.c;
 }
 
 function eval(choice) {
   if (!answered) {
-    var correctAnswer = myQuestions[questionscoreObjber].correctAnswer;
+    var correctAnswer = myQuestions[index].correctAnswer;
     if (choice == correctAnswer) {
       result.innerHTML = "Correct";
       score++;
@@ -180,10 +180,10 @@ function eval(choice) {
       
     }
 
-    if (questionscoreObjber == myQuestions.length -1) {
+    if (index == myQuestions.length -1) {
       reset();
     } else {
-      questionscoreObjber++;
+      index++;
       answered = true;
     }
   }
@@ -192,7 +192,7 @@ function eval(choice) {
 function reset() {
   isComplete = true;
   isQuizStart = false;
-  questionscoreObjber = 0;
+  index = 0;
   clearInterval(timer);
 
   result.style.display = "none";
@@ -253,6 +253,7 @@ function arrangeScores(scoreObj, array) {
   }
   return array
 }
+
 function clearsHighscores(){
   localStorage.clear();
   renderScores() 
